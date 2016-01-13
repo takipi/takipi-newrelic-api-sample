@@ -43,7 +43,7 @@ public class TakipiNewRelicApiSample {
 			Map<String, String> params = new HashMap<String, String>();
 			params.put("prop1", "test1");
 			
-			TakipiEventFireOptions eventFireOptions = buildEventFireOptions("Testing New Relic events3");
+			TakipiEventFireOptions eventFireOptions = buildEventFireOptions("Testing New Relic events");
 			TakipiEventResult takipiEventResult = event.fire(eventFireOptions);
 			
 			String takipiLink = generateTakipiLink(takipiEventResult);
