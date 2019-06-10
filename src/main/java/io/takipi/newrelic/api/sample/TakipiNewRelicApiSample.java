@@ -6,6 +6,7 @@ import java.util.Map;
 import com.newrelic.api.agent.NewRelic;
 import com.newrelic.api.agent.Trace;
 import com.takipi.sdk.v1.api.Takipi;
+import com.takipi.sdk.v1.api.TakipiOptions;
 import com.takipi.sdk.v1.api.core.events.TakipiEvent;
 import com.takipi.sdk.v1.api.core.events.TakipiEventFireOptions;
 import com.takipi.sdk.v1.api.core.events.TakipiEventResult;
@@ -24,7 +25,7 @@ public class TakipiNewRelicApiSample {
 	private static TakipiEvent event;
 	
 	static {
-		takipi = Takipi.create("Takipi-NewRelic-Error");
+		takipi = Takipi.create("Takipi-NewRelic-Error", TakipiOptions.newBuilder().withDebugEnabled(true).build());
 		event = takipi.events().createEvent("noticeError");
 	}
 	
