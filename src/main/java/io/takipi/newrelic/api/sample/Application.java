@@ -1,32 +1,18 @@
 package io.takipi.newrelic.api.sample;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.Random;
-import java.util.stream.Collectors;
-import java.util.zip.GZIPInputStream;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.jboss.logging.MDC;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.web.servlet.ServletContextInitializer;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.HandlerExceptionResolver;
+import org.springframework.web.client.RestTemplate;
 
-import com.google.common.base.Charsets;
-import com.google.common.io.ByteSource;
+import hello.Quote;
 
 @Controller
 @EnableAutoConfiguration
@@ -52,6 +38,24 @@ public class Application {
     String fire() {
       new TakipiNewRelicApiSample.NewRelicApiWrapper().fire();
       return "fire";
+    }
+    
+
+    @RequestMapping("/slow")
+    @ResponseBody
+    String slow() {
+    	long l = new Random().nextLong() % 10000 + 100;
+    	
+    	try {
+			Thread.sleep(l);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+    	
+    	RestTemplate restTemplate = new RestTemplate();
+        Quote quote = restTemplate.getForObject("https://gturnquist-quoters.cfapps.io/api/random", Quote.class);
+    	
+    	return "slept for " + l + "ms" + ". quote: " + quote;
     }
     
     @RequestMapping("/uncaught")

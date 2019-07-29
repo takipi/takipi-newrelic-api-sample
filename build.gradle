@@ -44,7 +44,6 @@ dependencies {
     compile 'io.sentry:sentry-spring:1.7.5'
     compile 'com.newrelic.agent.java:newrelic-api:5.1.0'
     compile 'com.newrelic.agent.java:newrelic-java:5.1.0'
-    compile 'com.takipi:takipi-sdk:0.3.0'
 
     // Use JUnit test framework
     testCompile 'junit:junit:4.12'
